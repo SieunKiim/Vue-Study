@@ -3,7 +3,8 @@
         "allowJs": true,
         "target": "ES5",
         "outDir": "./built",
-        "moduleResolution": "Node"
+        "moduleResolution": "Node",
+        "lib": ["ES2015", "DOM", "DOM.Iterable"]
     },
     "include": ["./src/**/*"]
 }
