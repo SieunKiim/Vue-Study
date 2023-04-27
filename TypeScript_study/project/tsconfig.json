@@ -5,7 +5,13 @@
         "outDir": "./dist",
         "moduleResolution": "Node",
         "lib": ["ES2015", "DOM", "DOM.Iterable"],
-        "noImplicitAny": true
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ],
+        "strict": true
     },
     "include": ["./src/**/*"]
 }
