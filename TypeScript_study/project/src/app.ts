@@ -12,9 +12,14 @@ import {
 } from './covid/index';
 
 // utils
-function $(selector: string) {
-  // DOM에 있는 요소를 가져오기 위해 작성한 함수 (달러사인으로 document.querySelector. 을 쓰는 과정을 간소화 함)
-  return document.querySelector(selector);
+// function $(selector: string) {
+//   // DOM에 있는 요소를 가져오기 위해 작성한 함수 (달러사인으로 document.querySelector. 을 쓰는 과정을 간소화 함)
+//   return document.querySelector(selector);
+// }
+
+function $<T extends HTMLElement = HTMLDivElement>(selector: string){
+  const element = document.querySelector(selector);
+  return element as T;
 }
 
 function getUnixTimestamp(date: Date | string) {
@@ -22,10 +27,10 @@ function getUnixTimestamp(date: Date | string) {
 }
 
 // DOM
-const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
-const deathsTotal = $('.deaths') as HTMLParagraphElement;
-const recoveredTotal = $('.recovered') as HTMLParagraphElement;
-const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
+const confirmedTotal = $('.confirmed-total');
+const deathsTotal = $('.deaths');
+const recoveredTotal = $('.recovered');
+const lastUpdatedTime = $('.last-updated-time');
 const rankList = $('.rank-list');
 const deathsList = $('.deaths-list');
 const recoveredList = $('.recovered-list');
@@ -151,12 +156,15 @@ function setDeathsList(data: CountrySummaryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList.appendChild(li);
+    deathsList!.appendChild(li);
   });
 }
 
 function clearDeathList() {
-  deathsList.innerHTML = null;
+  if (!deathsList) {
+    return;
+  }
+  deathsList.innerHTML = '';
 }
 
 function setTotalDeathsByCountry(data: CountrySummaryResponse) {
@@ -178,12 +186,17 @@ function setRecoveredList(data: CountrySummaryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    recoveredList.appendChild(li);
+    recoveredList?.appendChild(li);
+    if (recoveredList === null || recoveredList === undefined) {
+      return;
+    } else {
+      recoveredList.appendChild(li);
+    }
   });
 }
 
 function clearRecoveredList() {
-  recoveredList.innerHTML = null;
+  recoveredList.innerHTML = '';
 }
 
 function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
