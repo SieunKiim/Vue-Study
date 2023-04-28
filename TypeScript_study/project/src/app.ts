@@ -17,7 +17,7 @@ import {
 //   return document.querySelector(selector);
 // }
 
-function $<T extends HTMLElement = HTMLDivElement>(selector: string){
+function $<T extends HTMLElement = HTMLDivElement>(selector: string) {
   const element = document.querySelector(selector);
   return element as T;
 }
@@ -156,7 +156,7 @@ function setDeathsList(data: CountrySummaryResponse) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList!.appendChild(li);
+    deathsList?.appendChild(li);
   });
 }
 
